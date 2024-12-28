@@ -54,6 +54,21 @@ import java.util.*;
 	        this.rentalDays = rentalDays;
 	        this.totalPrice = rentalDays * car.getPricePerDay();
 	    }
+	    public Car getCar() {
+	    	return car;
+	    }
+	    public int getBookingId1() {
+	    	return bookingId;
+	    }
+	    public String getCustomerName() {
+	    	return customerName;
+	    }
+	    public int getRentalDays() {
+	    	return rentalDays;
+	    }
+	    public double getTotalPrice() {
+	    	return totalPrice;
+	    }
 
 	    public String getDetails() {
 	        return "Booking ID: " + bookingId + ", Car: " + car.getDetails() + ", Customer: " + customerName +

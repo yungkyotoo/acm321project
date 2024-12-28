@@ -7,11 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-// Main GUI Application
 public class CarRentalSystemGUI {
     private JFrame frame;
-    private CarService carService; // Use your existing CarService
-    private BookingService bookingService; // Use your existing BookingService
+    private CarService carService;
+    private BookingService bookingService;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -25,8 +24,8 @@ public class CarRentalSystemGUI {
     }
 
     public CarRentalSystemGUI() {
-        carService = new CarService(); // Initialize your CarService
-        bookingService = new BookingService(); // Initialize your BookingService
+        carService = new CarService(); // Initialize CarService
+        bookingService = new BookingService(); // Initialize BookingService
         initialize();
     }
 
@@ -62,6 +61,7 @@ public class CarRentalSystemGUI {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Car ID");
         model.addColumn("Details");
+
         for (Car car : availableCars) {
             model.addRow(new Object[]{car.getCarId(), car.getDetails()});
         }
@@ -96,16 +96,25 @@ public class CarRentalSystemGUI {
         bookingFrame.add(bookButton);
 
         bookButton.addActionListener(e -> {
-            int carId = Integer.parseInt(carIdField.getText());
-            String customerName = nameField.getText();
-            int rentalDays = Integer.parseInt(daysField.getText());
-            Car car = carService.getCarById(carId);
+            try {
+                int carId = Integer.parseInt(carIdField.getText());
+                String customerName = nameField.getText();
+                int rentalDays = Integer.parseInt(daysField.getText());
 
-            if (car != null && car.isAvailable()) {
-                Booking booking = bookingService.createBooking(car, customerName, rentalDays);
-                JOptionPane.showMessageDialog(bookingFrame, "Booking successful!\n" + booking.getDetails());
-            } else {
-                JOptionPane.showMessageDialog(bookingFrame, "Car not available or invalid Car ID.");
+                if (customerName.isEmpty()) {
+                    JOptionPane.showMessageDialog(bookingFrame, "Name cannot be empty.");
+                    return;
+                }
+
+                Car car = carService.getCarById(carId);
+                if (car == null || !car.isAvailable()) {
+                    JOptionPane.showMessageDialog(bookingFrame, "Invalid car ID or car not available.");
+                } else {
+                    Booking booking = bookingService.createBooking(car, customerName, rentalDays);
+                    JOptionPane.showMessageDialog(bookingFrame, "Booking successful!\n" + booking.getDetails());
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(bookingFrame, "Please enter valid numbers for Car ID and Rental Days.");
             }
         });
 
@@ -124,8 +133,13 @@ public class CarRentalSystemGUI {
         model.addColumn("Total Price");
 
         for (Booking booking : bookingService.getAllBookings()) {
-            model.addRow(new Object[]{booking.getBookingId(), booking.getCar().getDetails(),
-                    booking.getCustomerName(), booking.getRentalDays(), booking.getTotalPrice()});
+            model.addRow(new Object[]{
+                    booking.getBookingId(),
+                    booking.getCar().getDetails(),
+                    booking.getCustomerName(),
+                    booking.getRentalDays(),
+                    booking.getTotalPrice()
+            });
         }
 
         JTable bookingsTable = new JTable(model);
