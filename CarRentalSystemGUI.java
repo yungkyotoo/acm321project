@@ -24,8 +24,8 @@ public class CarRentalSystemGUI {
     }
 
     public CarRentalSystemGUI() {
-        carService = new CarService(); // Initialize CarService
-        bookingService = new BookingService(); // Initialize BookingService
+        carService = new CarService(); 
+        bookingService = new BookingService(); 
         initialize();
     }
 

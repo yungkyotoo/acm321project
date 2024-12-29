@@ -2,7 +2,7 @@ package project;
 import java.util.*;
 	
 
-	// Car class to represent a car in the system
+	
 	class Car {
 	    private int carId;
 	    private String make;
@@ -39,7 +39,7 @@ import java.util.*;
 	    }
 	}
 
-	// Booking class to represent a car booking
+	
 	class Booking {
 	    private int bookingId;
 	    private Car car;
@@ -81,7 +81,7 @@ import java.util.*;
 		}
 	}
 
-	// Service class to manage cars
+	
 	class CarService {
 	    private List<Car> cars = new ArrayList<>();
 
@@ -111,7 +111,6 @@ import java.util.*;
 	    }
 	}
 
-	// Service class to manage bookings
 	class BookingService {
 	    private List<Booking> bookings = new ArrayList<>();
 	    private int nextBookingId = 1;
@@ -119,7 +118,7 @@ import java.util.*;
 	    public Booking createBooking(Car car, String customerName, int rentalDays) {
 	        Booking booking = new Booking(nextBookingId++, car, customerName, rentalDays);
 	        bookings.add(booking);
-	        car.setAvailable(false); // Mark the car as unavailable
+	        car.setAvailable(false); 
 	        return booking;
 	    }
 
@@ -128,7 +127,6 @@ import java.util.*;
 	    }
 	}
 
-	// Main class
 	public class CarRentalSystem {
 	    public static void main(String[] args) {
 	        Scanner scanner = new Scanner(System.in);
@@ -146,7 +144,7 @@ import java.util.*;
 
 	            System.out.print("Choose an option: ");
 	            int choice = scanner.nextInt();
-	            scanner.nextLine(); // Consume newline
+	            scanner.nextLine(); 
 
 	            switch (choice) {
 	                case 1:
